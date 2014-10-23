@@ -5,6 +5,7 @@ class docker (
 ){
 
   define docker::container (
+    $envs = '',
     $options = '',
     $repository,
     $ports,

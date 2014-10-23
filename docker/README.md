@@ -27,6 +27,8 @@ Installation
     docker::container:
       apache:
         repository: 'akegata/apache2'
+        envs:
+          - 'APACHE_USER=apache'
         ports:
           - '8080:80'
         volumes:
