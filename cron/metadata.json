@@ -1,0 +1,25 @@
+{
+  "version": "0.0.2",
+  "description": "Manage the /etc/crontab file with data stored in hiera",
+  "source": "UNKNOWN",
+  "summary": "Manage the /etc/crontab file",
+  "project_page": "UNKNOWN",
+  "author": "lsit",
+  "checksums": {
+    "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372",
+    "README.md": "a5c8cebab7fef78e0d91b85778372842",
+    "CHANGELOG.md": "00fd0a7dc8d644367a8da6cb43f4cd2e",
+    "templates/crontab.erb": "f312243569022c6ac7045e29491fd7b8",
+    "tests/init.pp": "26084a410eb400e3c0acbc3e1b5b3ad7",
+    "Modulefile": "0f34e06c5a53628bfb5306bc0f2223a0",
+    "manifests/init.pp": "6088b60c97a5be167317c8ce69163f5b"
+  },
+  "dependencies": [
+
+  ],
+  "license": "Distributed under the New BSD License",
+  "name": "lsit-cron",
+  "types": [
+
+  ]
+}

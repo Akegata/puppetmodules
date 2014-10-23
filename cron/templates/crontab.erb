@@ -1,0 +1,39 @@
+## <%= puppetheader %>
+
+<% if (!crontab_vars_hsh.empty?)  -%>
+## Variables
+<% crontab_vars_hsh.sort.each do |key,val| -%>
+<%= key %>=<%= val %> 
+<% end -%>
+<% end -%>
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * username command-to-be-executed
+
+<% if (!crontab_site_job_hsh.empty?)  -%>
+## Site Wide Jobs
+<% crontab_site_job_hsh.sort.each do |key,val| -%>
+
+# <%= key %>
+<% val.each do |croncmd|  -%>
+ <%= croncmd %>
+<% end -%>
+<% end -%>
+<% end -%>
+
+<% if (!crontab_node_job_hsh.empty?)  -%>
+## Node Specific Jobs
+<% crontab_node_job_hsh.sort.each do |key,val| -%>
+
+# <%= key %>
+<% val.each do |croncmd|  -%>
+ <%= croncmd %>
+<% end -%>
+<% end -%>
+<% end -%>

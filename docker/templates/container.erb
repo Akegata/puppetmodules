@@ -1,0 +1,16 @@
+[Unit]
+Description=<%= @name %> container
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill <%= @name %>
+ExecStartPre=-/usr/bin/docker rm <%= @name %>
+ExecStartPre=/usr/bin/docker pull <%= @repository %>
+ExecStart=<%= @command %>
+ExecStop=/usr/bin/docker stop <%= @name %>
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

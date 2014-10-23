@@ -1,0 +1,85 @@
+#!/bin/bash
+
+mailaddress=<% mail.each do |mail| -%><%= mail %><% end -%>
+
+# Find hosts to back up
+list_hosts()
+{
+  hosts=$(ssh puppet "puppet cert list --all"| awk -F'"' '{ print $2 }')
+
+  # If puppet server is unavailable, send an error mail.
+  if [ -z "$hosts" ]; then
+    echo "Unable to generate host list from puppeti server." | mail -s "Backup job failed" $mailaddress
+    exit 1
+  fi
+}
+
+# Backup all hosts
+backup_hosts()
+{
+  failed_hosts=()
+  echo "Backup job started at $(date '+%Y-%m-%d, %T, %A')" >> /var/log/backup.log
+
+  for host in $hosts; do
+    START=$(date +%s)
+    echo "Backing up $host" >> /var/log/backup.log
+
+    if [ ! -d /pool/backup/hosts/$host/ ]; then
+      mkdir /pool/backup/hosts/$host/
+    fi
+
+    # Do the actual backup, through rsync.
+    rsync -aAXve "ssh -o StrictHostKeyChecking=no" --delete --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/var/lib/libvirt/images/*","/pool/*","/var/www-java/archive/*","Downloads","VirtualBox VMs","Dropbox*",".cache",".cxoffice",".local",".PlayOnLinux","/var/lib/docker",".vagrant.d","/tmp"} $host:/ /pool/backup/hosts/$host/
+
+    # If a host is down, add it to the failed_hosts array.
+    if [ $? -ne 0 ]; then
+      failed_hosts+=("$host")
+    fi
+
+    FINISH=$(date +%s)
+    echo "total time: $(( ($FINISH-$START) / 60 )) minutes, $(( ($FINISH-$START) % 60 )) seconds" | tee $1/"Backup from $(date '+%Y-%m-%d, %T, %A')" >> /var/log/backup.log
+  done
+
+  # If one or more hosts were unavailable during the backup job, send a mail with a list of the hosts.
+  if [ ${#failed_hosts[@]} -ne 0 ]; then
+    printf -- '%s\n' 'The following hosts were unavailable for the backup job:' "${failed_hosts[@]}" | mail -s "Backup of hosts failed" $mailaddress
+  fi
+}
+
+check_backupdisk()
+{
+  if ! grep -q 3tbbackupdisk /proc/mounts; then
+    echo "Backup disk not mounted" | mail -s "Backup job failed" $mailaddress
+    exit 1
+  fi
+}
+
+compress_hosts()
+{
+  for host in $(ls -1 /pool/backup/hosts/); do
+    if [ ! -e "/mnt/3tbbackupdisk/backup/hosts/${host}_$(date +%y%m%d).tar.bz2" ]; then
+      tar cfa /mnt/3tbbackupdisk/backup/hosts/${host}_$(date +%y%m%d).tar.bz2 /pool/backup/hosts/$host
+    fi
+  done
+}
+
+remove_old()
+{
+  for host in $hosts; do
+    if [ "$(ls -1 /mnt/3tbbackupdisk/backup/hosts/ | grep $host| wc -l)" -gt "3" ]; then
+      find /mnt/3tbbackupdisk/backup/hosts -mtime +30 -delete
+    fi
+  done
+}
+
+backupdirs()
+{
+  rsync -axv /pool/skydive /pool/music /mnt/3tbbackupdisk
+}
+
+list_hosts
+backup_hosts
+check_backupdisk
+compress_hosts
+remove_old
+backupdirs

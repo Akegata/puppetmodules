@@ -1,0 +1,9 @@
+name    'lsit-cron'
+version '0.0.2'
+source 'UNKNOWN'
+author 'lsit'
+license 'Distributed under the New BSD License'
+summary 'Manage the /etc/crontab file'
+description 'Manage the /etc/crontab file with data stored in hiera'
+project_page 'UNKNOWN'
+
