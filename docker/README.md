@@ -1,4 +1,4 @@
-akegata-docker
+puppet-docker
 
 Manage docker instances in systemd with hiera.
 Installs docker 1.3.0 from binary, since CentOS 7 repos provide a very old docker version.
@@ -26,5 +26,8 @@ Installation
 
     docker::container:
       apache:
-        command: "/usr/bin/docker run -v '/var/www/httpd:/var/www/httpd/' -p 8080:80 --name httpd httpd
-
+        repository: 'akegata/apache2'
+        ports:
+          - '8080:80'
+        volumes:
+          - '/var/www/httpd:/var/www/httpd/'

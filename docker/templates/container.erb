@@ -8,7 +8,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill <%= @name %>
 ExecStartPre=-/usr/bin/docker rm <%= @name %>
 ExecStartPre=/usr/bin/docker pull <%= @repository %>
-ExecStart=<%= @command %>
+ExecStart=<%= @binary %> run <%= @options %> <% volumes.each do |volume| -%>-v <%= volume %> <% end -%><% ports.each do |port| -%>-p <%= port %> <% end -%>--name <%= @name %> <%= @repository %>
 ExecStop=/usr/bin/docker stop <%= @name %>
 Restart=on-failure
 

@@ -1,8 +1,15 @@
 # == Class: docker
 #
 class docker (
+  $binary = '/usr/bin/docker',
 ){
-  define docker::container ( $repository, $command ) {
+
+  define docker::container (
+    $options = '',
+    $repository,
+    $ports,
+    $volumes,
+  ){
     file { "/usr/lib/systemd/system/$name.service":
       mode    => '0644',
       owner   => 'root',
@@ -15,6 +22,9 @@ class docker (
       enable => 'true',
     }
   }
+
+  $container = hiera('docker::container', {})
+  create_resources(docker::container, $container)
 
   case $::operatingsystemmajrelease {
     '7': {
@@ -83,9 +93,6 @@ class docker (
         enable => 'true',
         require => [ File['/usr/lib/systemd/system/docker.socket'],File['/usr/lib/systemd/system/docker.service'] ],
       }
-
-      $container = hiera('docker::container', {})
-      create_resources(docker::container, $container)
     }
   }
 }
