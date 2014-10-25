@@ -1,0 +1,10 @@
+description "<%= @name %> container"
+start on filesystem and started docker
+stop on runlevel [!2345]
+respawn
+script
+  <%= @binary %> kill <%= @name %>
+  <%= @binary %> rm <%= @name %>
+  <%= @binary %> pull <%= @repository %>
+  <%= @binary %> run <%= @options %> <% envs.each do |env| -%>-e <%= env %> <% end -%><% volumes.each do |volume| -%>-v <%= volume %> <% end -%><% ports.each do |port| -%>-p <%= port %> <% end -%>--name <%= @name %> <%= @repository %>
+end script
