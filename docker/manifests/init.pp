@@ -8,7 +8,7 @@ class docker (
     $options = '',
     $repository,
     $ports,
-    $volumes,
+    $volumes = '',
   ){
     case $::osfamily {
       'RedHat': {

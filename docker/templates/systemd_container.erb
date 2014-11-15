@@ -8,7 +8,7 @@ TimeoutStartSec=0
 ExecStartPre=-<%= @binary %> kill <%= @name %>
 ExecStartPre=-<%= @binary %> rm <%= @name %>
 ExecStartPre=<%= @binary %> pull <%= @repository %>
-ExecStart=<%= @binary %> run <%= @options %> <% envs.each do |env| -%>-e <%= env %> <% end -%><% volumes.each do |volume| -%>-v <%= volume %> <% end -%><% ports.each do |port| -%>-p <%= port %> <% end -%>--name <%= @name %> <%= @repository %>
+ExecStart=<%= @binary %> run <%= @options %><% if @envs != "" -%><% envs.each do |env| -%>-e <%= env %> <% end -%> <% end -%><% if @volumes != "" -%><% volumes.each do |volume| -%>-v <%= volume %> <% end -%><% end -%><% ports.each do |port| -%>-p <%= port %> <% end -%>--name <%= @name %> <%= @repository %>
 ExecStop=<%= @binary %> stop <%= @name %>
 Restart=on-failure
 

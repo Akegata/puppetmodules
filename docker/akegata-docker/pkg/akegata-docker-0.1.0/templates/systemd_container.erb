@@ -1,0 +1,16 @@
+[Unit]
+Description=<%= @name %> container
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-<%= @binary %> kill <%= @name %>
+ExecStartPre=-<%= @binary %> rm <%= @name %>
+ExecStartPre=<%= @binary %> pull <%= @repository %>
+ExecStart=<%= @binary %> run <%= @options %> <% envs.each do |env| -%>-e <%= env %> <% end -%><% volumes.each do |volume| -%>-v <%= volume %> <% end -%><% ports.each do |port| -%>-p <%= port %> <% end -%>--name <%= @name %> <%= @repository %>
+ExecStop=<%= @binary %> stop <%= @name %>
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
