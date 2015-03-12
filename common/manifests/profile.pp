@@ -8,7 +8,7 @@ class common::profile
 
   file { '/etc/profile.d/ls_colors.sh':
     ensure  => present,
-    content => "LS_COLORS='di=38;5;43' ; export LS_COLORS",
+    content => "LS_COLORS='di=38;5;43:ex=32' ; export LS_COLORS",
     mode    => 0655,
   }
 
