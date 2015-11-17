@@ -1,0 +1,19 @@
+{
+  "Gemfile": "dbc1a15e3a264c03878028240cfc5d89",
+  "README.md": "c96b485f8831a630f67bc8706b68be6b",
+  "Rakefile": "20b80e526e351a74df2001f504e756d2",
+  "files/docker": "86c296f1e7446d04a001466ff6ff2e0b",
+  "files/docker.bash": "d7f29573386135c1b45fb4a13f6d46f0",
+  "files/docker.service": "490f83833189da0f7ccf07029b9a0c74",
+  "files/docker.socket": "bfcdf23967fc9b4e9d8d4d22ee4daafe",
+  "files/dockerfile.txt": "c5a83ef58622807d40f7609ec8e1fc51",
+  "files/dockerfile.vim": "67392a878a86ac78629590ca56011c19",
+  "files/dockerfile_ftdetect.vim": "cc87876f292ebda37102660217c0fd3e",
+  "manifests/init.pp": "993ea45c12c8d67520db1c54b3e455ca",
+  "metadata.json": "eede630939bc08a0c4ce88333e578dde",
+  "spec/classes/init_spec.rb": "56b5395603cb9ee41f5c056796dd1e0f",
+  "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+  "templates/initd_container.erb": "88f4d3e1fa774fcb5681bab31f179603",
+  "templates/systemd_container.erb": "62d708cb155bad510b5d3ce458556b56",
+  "tests/init.pp": "8f9c81e35e4287bf551f1d5370a38709"
+}
