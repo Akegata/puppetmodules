@@ -1,11 +1,5 @@
 # Install and manage puppet agents and masters, with puppet!
 #
-# == Author
-# Martin Hovmoller <martin.hovmoller@unibet.com>
-#
-# == Copyright
-# Copyright North Development AB, unless otherwise noted
-#
 # To set up a puppet master in a vagrant environment, include the class
 # with the vagrant parameter set to true.
 # If you wish to run the vagrant puppet master in a rails environment,
