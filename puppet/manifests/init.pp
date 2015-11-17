@@ -7,7 +7,8 @@
 #
 
 class puppet (
-  $master          = false,
+  $master      = false,
+  $environment = 'production',
 ){
   include puppet::install, puppet::cron
 

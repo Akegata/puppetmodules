@@ -23,6 +23,10 @@ class common
   package { 'unzip':
     ensure => present
   }
+  
+  package { 'yum-cron':
+    ensure => present
+  }
 
   package { 'wget':
     ensure => present
