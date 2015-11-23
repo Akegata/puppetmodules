@@ -20,6 +20,10 @@ class common
     ensure => present
   }
 
+  package { 'sysstat':
+    ensure => present
+  }
+
   package { 'unzip':
     ensure => present
   }
