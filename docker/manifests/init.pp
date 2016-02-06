@@ -117,7 +117,7 @@ class docker (
           service { 'docker':
             ensure => 'running',
             enable => 'true',
-            require => [ File['/usr/lib/systemd/system/docker.socket'],File['/usr/lib/systemd/system/docker.service'] ],
+            #require => [ File['/usr/lib/systemd/system/docker.socket'],File['/usr/lib/systemd/system/docker.service'] ],
           }
         }
       }
