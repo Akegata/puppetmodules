@@ -8,6 +8,7 @@ class yum::defaults ( ) inherits yum::params {
   $osver = split($::operatingsystemrelease, '[.]')
 
   if 'epel' in $yum::extrarepo { include yum::repo::epel }
+  if 'docker' in $yum::extrarepo { include yum::repo::docker }
   if 'rpmforge' in $yum::extrarepo { include yum::repo::rpmforge }
   if 'jpackage5' in $yum::extrarepo { include yum::repo::jpackage5 }
   if 'jpackage6' in $yum::extrarepo { include yum::repo::jpackage6 }
