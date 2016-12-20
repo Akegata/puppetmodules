@@ -32,10 +32,6 @@ class common
     ensure => present
   }
 
-  package { 'yum-cron':
-    ensure => present
-  }
-
   class { 'common::hosts':
   }
 

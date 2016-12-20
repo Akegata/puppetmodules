@@ -59,6 +59,7 @@ compress_hosts()
   for host in $(ls -1 /pool/backup/hosts/); do
     if [ ! -e "/mnt/3tbbackupdisk/backup/hosts/${host}_$(date +%y%m%d).tar.bz2" ]; then
       tar cfa /mnt/3tbbackupdisk/backup/hosts/${host}_$(date +%y%m%d).tar.bz2 /pool/backup/hosts/$host
+      ln -sf /mnt/3tbbackupdisk/backup/hosts/${host}_$(date +%y%m%d).tar.bz2 /mnt/3tbbackupdisk/backup/hosts/${host}-current
     fi
   done
 }
